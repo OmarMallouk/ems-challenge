@@ -11,7 +11,7 @@ export default function EmployeePage() {
   const [employee, setEmployee] = useState({
     fullName: "",
     email: "",
-    phone_number: "",
+    phoneNumber: "",
     jobTitle: "",
     department: "",
     salary: "",
@@ -42,7 +42,25 @@ const handleSubmits = async (e: React.FormEvent) =>{
   return (
     <div>
       <div>
-        To implement
+        <h1>Edit Employee</h1>
+        <form onSubmit={handleSubmits}>
+          <label>Full Name</label>
+          <input type="text" name="fullName" value={employee.fullName} onChange={handleEdits} required/>
+
+          <label>Email:</label>
+        <input type="email" name="email" value={employee.email} onChange={handleEdits} required />
+
+        <label>Phone Number:</label>
+        <input type="text" name="phoneNumber" value={employee.phoneNumber} onChange={handleEdits} required />
+
+        <label>Job Title:</label>
+        <input type="text" name="jobTitle" value={employee.jobTitle} onChange={handleEdits} required />
+
+        <label>Department:</label>
+        <input type="text" name="department" value={employee.department} onChange={handleEdits} required />
+
+        <button type="submit">Update Employee</button>
+        </form>
       </div>
       <ul>
         <li><a href="/employees">Employees</a></li>
