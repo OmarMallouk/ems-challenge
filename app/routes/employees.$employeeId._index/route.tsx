@@ -9,8 +9,22 @@ export default function EmployeePage() {
   const {id} = useParams();
   const navigate = useNavigate();
   const [employee, setEmployee] = useState({
-    
-  })
+    fullName: "",
+    email: "",
+    phone_number: "",
+    jobTitle: "",
+    department: "",
+    salary: "",
+    startDate: "",
+    endDate: "",
+  });
+
+  useEffect(()=>{
+    fetch(`/api/employees/${id}`).then((res) => res.json()).then((data) => setEmployee(data));
+  },
+[id])
+
+
   return (
     <div>
       <div>
