@@ -24,6 +24,7 @@ CREATE TABLE employees (
     jobTitle TEXT NOT NULL,
     department TEXT NOT NULL,
     salary REAL CHECK (salary >= 0),
+    dateOfBirth Date,
     startDate DATE NOT NULL,
     endDate DATE,
     photoPath TEXT,

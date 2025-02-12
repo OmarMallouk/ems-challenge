@@ -10,6 +10,7 @@ export const action: ActionFunction = async ({ request }) => {
   const jobTitle = formData.get("jobTitle");
   const salary = formData.get("salary");
   const department = formData.get("department");
+  const dateOfBirth = formData.get("dateOfBirth");
   const startDate = formData.get("startDate");
   const endDate = formData.get("endDate");
   const photoPath = formData.get("photoPath");
@@ -17,13 +18,14 @@ export const action: ActionFunction = async ({ request }) => {
 
   const db = await getDB();
   await db.run(
-    'INSERT INTO employees (fullName, email, phoneNumber, jobTitle, department, salary, startDate, endDate, photoPath, documentPath) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+    'INSERT INTO employees (fullName, email, phoneNumber, jobTitle, department, salary, dateOfBirth, startDate, endDate, photoPath, documentPath) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
     [fullName,
       email,
       phoneNumber,
       jobTitle,
       department,
       salary,
+      dateOfBirth,
       startDate,
       endDate || null, 
       photoPath || null, 
@@ -57,6 +59,10 @@ export default function NewEmployeePage() {
 
           <label htmlFor="salary">Salary</label>
           <input type="text" name="salary" id="salary" required  min="700" />
+
+          <label htmlFor="dateOfBirth">Date of Birth</label>
+          <input type="date" name="dateOfBirth" id="dateOfBirth" required />
+
 
           <label htmlFor="startDate">Start Date</label>
           <input type="date" name="startDate" id="startDate" required />

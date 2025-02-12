@@ -39,7 +39,7 @@ export default function EmployeesPage() {
             </li>
           </ul>
             </ul>
-            <Link to={`/employees/${employee.id}/edit`}>
+            <Link to={`/employees/${employee.id}/`}>
             <button>Edit</button>
             </Link>
         

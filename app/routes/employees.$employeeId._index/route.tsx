@@ -15,6 +15,7 @@ export default function EmployeePage() {
     jobTitle: "",
     department: "",
     salary: "",
+    dateOfBirth: "",
     startDate: "",
     endDate: "",
   });
