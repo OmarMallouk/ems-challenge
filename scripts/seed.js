@@ -26,6 +26,8 @@ const employees = [
   {
     full_name: 'Alice Johnson'
   },
+  { full_name: 'Vin Diesel' },
+  { full_name: 'Bilbo Baggins' },
 ];
 
 const timesheets = [
@@ -44,6 +46,10 @@ const timesheets = [
     start_time: '2025-02-12 07:00:00',
     end_time: '2025-02-12 16:00:00',
   },
+  { employee_id: 4, start_time: '2025-02-13 09:00:00',
+     end_time: '2025-02-13 18:00:00' }, 
+  { employee_id: 5, start_time: '2025-02-14 10:00:00',
+     end_time: '2025-02-14 19:00:00' }
 ];
 
 
