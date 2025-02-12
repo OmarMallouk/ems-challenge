@@ -22,7 +22,21 @@ export default function EmployeePage() {
   useEffect(()=>{
     fetch(`/api/employees/${id}`).then((res) => res.json()).then((data) => setEmployee(data));
   },
-[id])
+[id]);
+
+const handleEdits = (e: React.ChangeEvent<HTMLInputElement>) =>{
+  setEmployee({...employee, [e.target.name]: e.target.value});
+}
+
+const handleSubmits = async (e: React.FormEvent) =>{
+  e.preventDefault();
+  await fetch(`/api/employees/${id}`,{
+    method: "PUT",
+    headers: {"Content-type": "application/json"},
+    body: JSON.stringify(employee),
+  });
+  navigate("/employees"); //to see if the changes were sent to the db and the fields changed :)
+}
 
 
   return (
