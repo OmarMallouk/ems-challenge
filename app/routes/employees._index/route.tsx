@@ -1,6 +1,7 @@
 import { useLoaderData } from "react-router"
 import { getDB } from "~/db/getDB"
-import { Link } from "react-router"
+import { Link } from "react-router";
+import { useState } from "react";
 
 export async function loader() {
   
@@ -11,16 +12,43 @@ export async function loader() {
 }
 
 export default function EmployeesPage() {
-  const { employees } = useLoaderData()
+  const { employees } = useLoaderData();
+
+  const [search, setSearch] = useState("");
+
+  const filteredSearch = employees.filter((employee:any) =>
+    employee.fullName.toLowerCase().includes(search.toLowerCase()) || 
+    employee.email.toLowerCase().includes(search.toLowerCase()) || 
+    employee.phoneNumber.toLowerCase().includes(search.toLowerCase()) || 
+    employee.department.toLowerCase().includes(search.toLowerCase()) ||
+    employee.jobTitle.toLowerCase().includes(search.toLowerCase()) 
+
+  );
+
   return (
     <div>
-      <div>
-        {employees.map((employee: any) => (
-          <div>
-            <ul>
+
+<div>
+<input
+        type="text"
+        placeholder="Search by name or email"
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+      />
+
+<div>
+        {filteredSearch.length > 0 ? (
+          <ul>
+            {filteredSearch.map((employee:any) => (
+              <div>
+              
+               
+              <ul>
               <li>Employee #{employee.id}</li>
                 <ul>
-                  <li>Full Name: {employee.fullName}</li>
+                <li key={employee.id}>
+                <Link to={`/employees/${employee.id}/view/`}>{employee.fullName}</Link>
+              </li>
                   <li>Email: {employee.email}</li>
                   <li>Phone Number: {employee.phoneNumber}</li>
                   <li>Job Title: {employee.jobTitle}</li>
@@ -40,21 +68,15 @@ export default function EmployeesPage() {
             </li>
           </ul>
             </ul>
-            <Link to={`/employees/${employee.id}/view/`}>
-            <button>View</button>
-            </Link>
-            <Link to={`/employees/${employee.id}/`}>
-            <button>Edit</button>
-            </Link>
-        
-          </div>
-        ))}
+                </div>
+            ))}
+          </ul>
+        ) : (
+          <p>No employees found</p>
+        )}
       </div>
-      <hr />
-      <ul>
-        <li><a href="/employees/new">New Employee</a></li>
-        <li><a href="/timesheets/">Timesheets</a></li>
-      </ul>
+      </div>
+     
     </div>
   )
 }
