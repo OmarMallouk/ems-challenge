@@ -15,6 +15,8 @@ export default function EmployeesPage() {
   const { employees } = useLoaderData();
 
   const [search, setSearch] = useState("");
+  const [sortBy, setSortBy] = useState<"name" | "salary">("name"); 
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc"); 
 
   const filteredSearch = employees.filter((employee:any) =>
     employee.fullName.toLowerCase().includes(search.toLowerCase()) || 
@@ -24,6 +26,18 @@ export default function EmployeesPage() {
     employee.jobTitle.toLowerCase().includes(search.toLowerCase()) 
 
   );
+
+  const sortedEmployees = [...filteredSearch].sort((a, b) => {
+    if (sortBy === "name") {
+      return sortOrder === "asc"
+        ? a.fullName.localeCompare(b.fullName)
+        : b.fullName.localeCompare(a.fullName);
+    }
+    if (sortBy === "salary") {
+      return sortOrder === "asc" ? a.salary - b.salary : b.salary - a.salary;
+    }
+    return 0;
+  });
 
   return (
     <div>
@@ -36,10 +50,24 @@ export default function EmployeesPage() {
         onChange={(e) => setSearch(e.target.value)}
       />
 
+      </div>
+
+      <div>
+        <label>Sort By:</label>
+        <select value={sortBy} onChange={(e) => setSortBy(e.target.value as "name" | "salary")}>
+          <option value="name">Name</option>
+          <option value="salary">Salary</option>
+        </select>
+
+        <button onClick={() => setSortOrder(sortOrder === "asc" ? "desc" : "asc")}>
+          {sortOrder === "asc" ? "🔼 Ascending" : "🔽 Descending"}
+        </button>
+      </div>
+
 <div>
-        {filteredSearch.length > 0 ? (
+        {sortedEmployees.length > 0 ? (
           <ul>
-            {filteredSearch.map((employee:any) => (
+            {sortedEmployees.map((employee:any) => (
               <div>
               
                
@@ -76,7 +104,5 @@ export default function EmployeesPage() {
         )}
       </div>
       </div>
-     
-    </div>
   )
 }
