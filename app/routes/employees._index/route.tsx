@@ -3,8 +3,9 @@ import { getDB } from "~/db/getDB"
 import { Link } from "react-router"
 
 export async function loader() {
+  
   const db = await getDB()
-  const employees = await db.all("SELECT * FROM employees;")
+  const employees = await db.all("SELECT * FROM employees;" )
 
   return { employees }
 }
@@ -39,6 +40,9 @@ export default function EmployeesPage() {
             </li>
           </ul>
             </ul>
+            <Link to={`/employees/${employee.id}/view/`}>
+            <button>View</button>
+            </Link>
             <Link to={`/employees/${employee.id}/`}>
             <button>Edit</button>
             </Link>
