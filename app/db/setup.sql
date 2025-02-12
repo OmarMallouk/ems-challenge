@@ -21,7 +21,6 @@ CREATE TABLE employees (
     fullName TEXT NOT NULL,
     email TEXT NOT NULL,
     phoneNumber TEXT NOT NULL,
-    dateOfBirth DATE,
     jobTitle TEXT NOT NULL,
     department TEXT NOT NULL,
     salary REAL CHECK (salary >= 0),
@@ -40,5 +39,5 @@ CREATE TABLE timesheets (
     employee_id INTEGER NOT NULL,
     summary TEXT NULL,
     FOREIGN KEY (employee_id) REFERENCES employees(id),
-    CHECK (end_time > start_time),
+    CHECK (end_time > start_time)
 );

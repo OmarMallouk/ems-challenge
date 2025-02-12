@@ -1,8 +1,16 @@
+import { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router";
+
 export async function loader() {
   return {}
 }
 
 export default function EmployeePage() {
+  const {id} = useParams();
+  const navigate = useNavigate();
+  const [employee, setEmployee] = useState({
+    
+  })
   return (
     <div>
       <div>

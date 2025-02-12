@@ -18,16 +18,29 @@ const db = new sqlite3.Database(sqlitePath);
 
 const employees = [
   {
-    full_name: 'John Doe'
+    fullName: 'John Doe',
+    email: 'john@gmail.com',
+    phoneNumber: '1234567890',
+    jobTitle: 'Software Engineer',
+    department: 'IT',
+    salary: 700,
+    startDate: '2022-01-01',
+    endDate: null,
+    photoPath: '/uploads/john_doe.jpg',
+    documentPath: '/uploads/john_doe_cv.pdf'
   },
-  {
-    full_name: 'Jane Smith'
-  },
-  {
-    full_name: 'Alice Johnson'
-  },
-  { full_name: 'Vin Diesel' },
-  { full_name: 'Bilbo Baggins' },
+  { fullName: 'Vin Diesel',
+    email: 'vin@gmail.com',
+    phoneNumber: '9876543210',
+    jobTitle: 'Actor',
+    department: 'Entertainment',
+    salary: 9000,
+    startDate: '2000-06-10',
+    endDate: null,
+    photoPath: '/uploads/vin_diesel.jpg',
+    documentPath: '/uploads/vin_diesel_cv.pdf'
+   },
+
 ];
 
 const timesheets = [
