@@ -1,67 +1,64 @@
-import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router";
+import { useLoaderData, redirect, Form  } from "react-router";
+import { getDB } from "~/db/getDB";
+import type  { Params, ActionFunction  } from "react-router";
 
-export async function loader() {
-  return {}
+export async function loader({ params }: { params: any }) {
+  const { employeeId } = params;
+  const db = await getDB();
+  
+  const employee = await db.get("SELECT * FROM employees WHERE id = ?", [employeeId]);
+
+  if (!employeeId) {
+    throw new Response("employee not found", { status: 404 });
+  }
+
+  return { employee};
 }
+
+export const action: ActionFunction = async ({ request, params }) => {
+  const formData = await request.formData();
+  const id = formData.get("id");
+  const fullName = formData.get("fullName");
+  const email = formData.get("email");
+  const phoneNumber = formData.get("phoneNumber");
+  const jobTitle = formData.get("jobTitle");
+  const department = formData.get("department");
+  const { employeeId } = params;
+
+  const db = await getDB();
+  await db.run(
+    "UPDATE employees SET fullName = ?, email = ?, phoneNumber = ?, jobTitle = ?, department = ? WHERE id = ?",
+    [fullName, email, phoneNumber, jobTitle, department, employeeId]
+  );
+
+  return redirect("/employees");
+};
 
 export default function EmployeePage() {
-  const {id} = useParams();
-  const navigate = useNavigate();
-  const [employee, setEmployee] = useState({
-    fullName: "",
-    email: "",
-    phoneNumber: "",
-    jobTitle: "",
-    department: "",
-    salary: "",
-    dateOfBirth: "",
-    startDate: "",
-    endDate: "",
-  });
-
-  useEffect(()=>{
-    fetch(`/api/employees/${id}`).then((res) => res.json()).then((data) => setEmployee(data));
-  },
-[id]);
-
-const handleEdits = (e: React.ChangeEvent<HTMLInputElement>) =>{
-  setEmployee({...employee, [e.target.name]: e.target.value});
-}
-
-const handleSubmits = async (e: React.FormEvent) =>{
-  e.preventDefault();
-  await fetch(`/api/employees/${id}`,{
-    method: "PUT",
-    headers: {"Content-type": "application/json"},
-    body: JSON.stringify(employee),
-  });
-  navigate("/employees"); //to see if the changes were sent to the db and the fields changed :)
-}
-
+  const { employee} = useLoaderData();
 
   return (
     <div>
       <div>
         <h1>Edit Employee</h1>
-        <form onSubmit={handleSubmits}>
-          <label>Full Name</label>
-          <input type="text" name="fullName" value={employee.fullName} onChange={handleEdits} required/>
+        <Form method="post">
+          <label htmlFor="fullName">Full Name</label>
+          <input type="text" name="fullName" id="fullName" value={employee.fullName} />
 
-          <label>Email:</label>
-        <input type="email" name="email" value={employee.email} onChange={handleEdits} required />
+          <label htmlFor="email">Email:</label>
+        <input type="email" name="email" id="email" value={employee.email}  />
 
-        <label>Phone Number:</label>
-        <input type="text" name="phoneNumber" value={employee.phoneNumber} onChange={handleEdits} required />
+        <label htmlFor="phoneNumber">Phone Number:</label>
+        <input type="text" name="phoneNumber" id="phoneNumber" value={employee.phoneNumber}  />
 
-        <label>Job Title:</label>
-        <input type="text" name="jobTitle" value={employee.jobTitle} onChange={handleEdits} required />
+        <label htmlFor="jobTitle">Job Title:</label>
+        <input type="text" name="jobTitle" id="jobTitle" defaultValue={employee.jobTitle}  />
 
-        <label>Department:</label>
-        <input type="text" name="department" value={employee.department} onChange={handleEdits} required />
+        <label htmlFor="department">Department:</label>
+        <input type="text" name="department" id="department" defaultValue={employee.department}  />
 
         <button type="submit">Update Employee</button>
-        </form>
+        </Form>
       </div>
       <ul>
         <li><a href="/employees">Employees</a></li>
