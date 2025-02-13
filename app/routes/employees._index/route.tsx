@@ -2,6 +2,7 @@ import { useLoaderData } from "react-router"
 import { getDB } from "~/db/getDB"
 import { Link } from "react-router";
 import { useState } from "react";
+import styles from "./employees.module.css";
 
 export async function loader() {
   
@@ -40,14 +41,14 @@ export default function EmployeesPage() {
   });
 
   return (
-    <div>
+    <div className={styles.main}>
 
 <div>
 <input
         type="text"
         placeholder="Search by name or email"
         value={search}
-        onChange={(e) => setSearch(e.target.value)}
+        onChange={(e) => setSearch(e.target.value)} className={styles.search}
       />
 
       </div>
@@ -63,18 +64,15 @@ export default function EmployeesPage() {
           {sortOrder === "asc" ? "🔼 Ascending" : "🔽 Descending"}
         </button>
       </div>
-
 <div>
         {sortedEmployees.length > 0 ? (
           <ul>
             {sortedEmployees.map((employee:any) => (
               <div>
-              
-               
               <ul>
               <li>Employee #{employee.id}</li>
                 <ul>
-                <li key={employee.id}>
+                <li className={styles.employeeCard} key={employee.id}>
                 <Link to={`/employees/${employee.id}/view/`}>{employee.fullName}</Link>
               </li>
                   <li>Email: {employee.email}</li>

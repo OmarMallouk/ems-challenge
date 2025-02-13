@@ -1,8 +1,5 @@
-.main {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    max-width: 500px;
+.container {
+    max-width: 600px;
     margin: 20px auto;
     padding: 20px;
     background: #f8f9fa;
@@ -15,36 +12,40 @@
     color: #333;
   }
   
-  label {
-    font-weight: bold;
-    margin-top: 10px;
-    color: #555;
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
   }
   
-  input {
-    width: 100%;
-    padding: 8px;
+  label {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  input,
+  select {
+    padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 14px;
   }
   
-  input:focus {
+  input:focus,
+  select:focus {
     border-color: #007bff;
-    outline: none;
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
   }
   
   button {
-    width: 100%;
-    padding: 10px;
-    background: #007bff;
-    color: white;
+    padding: 10px 15px;
     border: none;
     border-radius: 5px;
     font-size: 16px;
+    background: #007bff;
+    color: white;
     cursor: pointer;
-    margin-top: 15px;
+    transition: background 0.3s;
   }
   
   button:hover {
@@ -57,20 +58,21 @@
   
   ul {
     list-style: none;
+    padding: 0;
     text-align: center;
   }
   
   ul li {
-    display: inline-block;
-    margin: 10px;
+    display: inline;
+    margin: 0 10px;
   }
   
-  ul li a {
+  ul a {
     text-decoration: none;
     color: #007bff;
   }
   
-  ul li a:hover {
+  ul a:hover {
     text-decoration: underline;
   }
   

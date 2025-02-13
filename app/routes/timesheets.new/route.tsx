@@ -1,6 +1,6 @@
 import { useLoaderData, Form, redirect } from "react-router";
 import { getDB } from "~/db/getDB";
-
+import styles from "./timesheets1.module.css";
 export async function loader() {
   const db = await getDB();
   const employees = await db.all('SELECT id, fullName FROM employees');

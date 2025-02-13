@@ -1,0 +1,81 @@
+.main {
+    /* display: flex;
+    flex-direction: row; */
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .search {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    outline: none;
+    transition: 0.3s;
+  }
+  
+  .search:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  }
+  
+  select, button {
+    margin: 10px;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+  }
+  
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  ul li {
+    background: #f8f9fa;
+    margin: 5px 0;
+    padding: 10px;
+    border-radius: 5px;
+  }
+  
+  a {
+    text-decoration: none;
+    color: #007bff;
+    font-weight: bold;
+  }
+  
+  img {
+    display: block;
+    margin-top: 5px;
+    border-radius: 5px;
+  }
+  
+
+
+  .employeeCard {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    margin-top: 20px;
+    transition: transform 0.2s;
+  }
+  
+  .employeeCard:hover {
+    transform: scale(1.02);
+  }
+  
+  .employeeCard ul {
+    padding-left: 20px;
+  }
+  
+  .employee-photo {
+    margin-top: 10px;
+    border-radius: 5px;
+  }

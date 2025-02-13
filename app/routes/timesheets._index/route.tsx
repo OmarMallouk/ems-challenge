@@ -2,6 +2,7 @@ import { useLoaderData } from "react-router";
 import { useState, useEffect } from "react";
 import { getDB } from "~/db/getDB";
 import { Link } from "react-router";
+import styles from "./timesheet.module.css"
 
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
