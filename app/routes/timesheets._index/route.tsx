@@ -1,7 +1,10 @@
 import { useLoaderData } from "react-router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { getDB } from "~/db/getDB";
 import { Link } from "react-router";
+
+import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css";
 
 export async function loader() {
   const db = await getDB();
@@ -14,12 +17,42 @@ export async function loader() {
 
 export default function TimesheetsPage() {
   const { timesheetsAndEmployees } = useLoaderData();
+  const [date, setDate] = useState(new Date());
+  const [showCalendar, setShowCalendar] = useState(false);
+
+
+  const handleDateChange = (newDate:any) => {
+    setDate(newDate);
+  };
+
+  const toggleCalendarView = () => {
+    setShowCalendar((prev) => !prev);
+  };
+
 
   return (
     <div>
       <div>
         <button>Table View</button>
-        <button>Calendar View</button>
+        <div>
+      <button onClick={toggleCalendarView}>
+        {showCalendar ? "Hide Calendar" : "Calendar View"}
+      </button>
+
+      {showCalendar && (
+        <Calendar
+          onChange={handleDateChange}
+          value={date}
+          tileContent={({ date }) => {
+            const timesheet = timesheetsAndEmployees.find(
+              (timesheet:any) => new Date(timesheet.start_time).toLocaleDateString() === date.toLocaleDateString()
+            );
+            return timesheet ? <div>{timesheet.fullName}</div> : null;
+          }}
+        />
+      )}
+    </div>
+     
       </div>
       {/* Replace `true` by a variable that is changed when the view buttons are clicked */}
       {true ? (
