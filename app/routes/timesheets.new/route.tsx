@@ -3,9 +3,10 @@ import { getDB } from "~/db/getDB";
 
 export async function loader() {
   const db = await getDB();
-  const employees = await db.all('SELECT id, full_name FROM employees');
-  return { employees };
+  const employees = await db.all('SELECT id, fullName FROM employees');
+  return { employees }; 
 }
+
 
 import type { ActionFunction } from "react-router";
 
@@ -31,7 +32,16 @@ export default function NewTimesheetPage() {
       <h1>Create New Timesheet</h1>
       <Form method="post">
         <div>
-          {/* Use employees to create a select input */}
+        <label htmlFor="employee_id">Select Employee:</label>
+        <select name="employee_id" id="employee_id" required>
+          <option value="" disabled selected>Click to choose</option>
+          {employees.map((employee:any) =>(
+            
+            
+            <option key={employee.id} value={employee.id}>{employee.fullName}</option>
+          
+          ) )}
+          </select>
         </div>
         <div>
           <label htmlFor="start_time">Start Time</label>

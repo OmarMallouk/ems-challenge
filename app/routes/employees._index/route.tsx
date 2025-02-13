@@ -103,6 +103,11 @@ export default function EmployeesPage() {
           <p>No employees found</p>
         )}
       </div>
+<ul>
+        <li><a href="/employees/new">New Employee</a></li>
+        <li><a href="/timesheets/">Timesheets</a></li>
+      </ul>
       </div>
+
   )
 }

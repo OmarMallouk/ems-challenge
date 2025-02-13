@@ -5,7 +5,7 @@ import { getDB } from "~/db/getDB";
 export async function loader() {
   const db = await getDB();
   const timesheetsAndEmployees = await db.all(
-    "SELECT timesheets.*, employees.full_name, employees.id AS employee_id FROM timesheets JOIN employees ON timesheets.employee_id = employees.id"
+    "SELECT timesheets.*, employees.fullName, employees.id AS employee_id FROM timesheets JOIN employees ON timesheets.employee_id = employees.id"
   );
 
   return { timesheetsAndEmployees };
