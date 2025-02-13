@@ -19,6 +19,8 @@ export default function TimesheetsPage() {
   const { timesheetsAndEmployees } = useLoaderData();
   const [date, setDate] = useState(new Date());
   const [showCalendar, setShowCalendar] = useState(false);
+  const [table, setTable] = useState(false);
+  const [search, setSearch] = useState("");
 
 
   const handleDateChange = (newDate:any) => {
@@ -27,13 +29,52 @@ export default function TimesheetsPage() {
 
   const toggleCalendarView = () => {
     setShowCalendar((prev) => !prev);
+    setTable(false);
   };
 
 
+  const toggleTableView = () => {
+    setTable((prev) => !prev);
+    setShowCalendar(false);
+  };
+
+  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(event.target.value);
+  };
+
+  const filteredTimesheets = timesheetsAndEmployees.filter((timesheet:any) =>
+    (timesheet.work_summary && timesheet.work_summary.toLowerCase().includes(search.toLowerCase())) ||
+    (timesheet.id.toString().includes(search))
+  );
+
   return (
     <div>
+
+<input
+  type="text"
+  placeholder="Search by ID or Summary"
+  value={search}
+  onChange={handleSearch}
+/>
+
+{filteredTimesheets.map((timesheet:any) => (
+    <div key={timesheet.id}>
+    <ul>
+      <li>Timesheet #{timesheet.id}</li>
+      <ul>
+        <li>Employee: {timesheet.full_name} (ID: {timesheet.employee_id})</li>
+        <li>Start Time: {timesheet.start_time}</li>
+        <li>End Time: {timesheet.end_time}</li>
+        <li>Summary: {timesheet.work_summary}</li>
+      </ul>
+    </ul>
+    <Link to={`/timesheets/${timesheet.id}/`}>
+    <button>Edit</button>
+    </Link>
+  </div>
+))}
       <div>
-        <button>Table View</button>
+      <button onClick={toggleTableView}>{table ? "Hide Table" : "View Table"}</button>
         <div>
       <button onClick={toggleCalendarView}>
         {showCalendar ? "Hide Calendar" : "Calendar View"}
@@ -52,36 +93,38 @@ export default function TimesheetsPage() {
         />
       )}
     </div>
+
+
+{table && (
+  <table>
+    <thead>
+      <tr>
+        <th>Timesheet #</th>
+        <th>Employee</th>
+        <th>Start Time</th>
+        <th>End Time</th>
+        <th>Summary</th>
+      </tr>
+    </thead>
+    <tbody>
+      {timesheetsAndEmployees.map((timesheet:any) => (
+        <tr key={timesheet.id}>
+          <td>{timesheet.id}</td>
+          <td>{timesheet.full_name}</td>
+          <td>{timesheet.start_time}</td>
+          <td>{timesheet.end_time}</td>
+          <td>{timesheet.work_summary}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+)}
      
       </div>
-      {/* Replace `true` by a variable that is changed when the view buttons are clicked */}
-      {true ? (
-        <div>
-          {timesheetsAndEmployees.map((timesheet: any) => (
-            <div key={timesheet.id}>
-              <ul>
-                <li>Timesheet #{timesheet.id}</li>
-                <ul>
-                  <li>Employee: {timesheet.full_name} (ID: {timesheet.employee_id})</li>
-                  <li>Start Time: {timesheet.start_time}</li>
-                  <li>End Time: {timesheet.end_time}</li>
-                  <li>Summary: {timesheet.work_summary}</li>
-                </ul>
-              </ul>
-              <Link to={`/timesheets/${timesheet.id}/`}>
-              <button>Edit</button>
-              </Link>
-            </div>
-          ))}
-        </div>
-      ) : (
-        <div>
-          <p>
-            To implement, see <a href="https://schedule-x.dev/docs/frameworks/react">Schedule X React documentation</a>.
-          </p>
-        </div>
-      )}
+    
       <hr />
+
+      
       <ul>
         <li><a href="/timesheets/new">New Timesheet</a></li>
         <li><a href="/employees">Employees</a></li>
