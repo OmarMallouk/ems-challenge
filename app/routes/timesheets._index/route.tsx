@@ -1,6 +1,7 @@
 import { useLoaderData } from "react-router";
 import { useState } from "react";
 import { getDB } from "~/db/getDB";
+import { Link } from "react-router";
 
 export async function loader() {
   const db = await getDB();
@@ -31,8 +32,12 @@ export default function TimesheetsPage() {
                   <li>Employee: {timesheet.full_name} (ID: {timesheet.employee_id})</li>
                   <li>Start Time: {timesheet.start_time}</li>
                   <li>End Time: {timesheet.end_time}</li>
+                  <li>Summary: {timesheet.work_summary}</li>
                 </ul>
               </ul>
+              <Link to={`/timesheets/${timesheet.id}/`}>
+              <button>Edit</button>
+              </Link>
             </div>
           ))}
         </div>

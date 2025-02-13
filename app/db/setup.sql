@@ -38,7 +38,7 @@ CREATE TABLE timesheets (
     start_time DATETIME NOT NULL,
     end_time DATETIME NOT NULL,
     employee_id INTEGER NOT NULL,
-    summary TEXT NULL,
+    work_summary TEXT NULL,
     FOREIGN KEY (employee_id) REFERENCES employees(id),
     CHECK (end_time > start_time)
 );
